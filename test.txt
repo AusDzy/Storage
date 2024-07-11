@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Circle Scroll</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 1s ease, color 1s ease;
+        }
+
+        .white-section {
+            background-color: white;
+            color: black;
+        }
+
+        .black-section {
+            background-color: black;
+            color: white;
+        }
+
+        .transition-section {
+            height: 200vh; /* Increased height to allow for scrolling */
+            position: relative;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            border-radius: 50%;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 1s ease, height 1s ease;
+            z-index: 10;
+        }
+
+        .transition-section.sticky .circle {
+            width: 200vmax;
+            height: 200vmax;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 section white-section">
+            <h1>White Section</h1>
+            <p>Scroll down to see the magic.</p>
+        </div>
+    </div>
+    <div class="row transition-section">
+        <div class="circle"></div>
+    </div>
+    <div class="row section black-section">
+        <div class="col-12">
+            <h1>Black Section</h1>
+            <p>This section has a black background.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('scroll', function() {
+        const transitionSection = document.querySelector('.transition-section');
+        const scrollPosition = window.scrollY + window.innerHeight;
+
+        if (scrollPosition > transitionSection.offsetTop + (transitionSection.offsetHeight / 4)) {
+            transitionSection.classList.add('sticky');
+        } else {
+            transitionSection.classList.remove('sticky');
+        }
+    });
+</script>
+
+</body>
+</html>
